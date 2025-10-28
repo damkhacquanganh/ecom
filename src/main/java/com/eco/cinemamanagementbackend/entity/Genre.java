@@ -1,24 +1,31 @@
 package com.eco.cinemamanagementbackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "genres")
 public class Genre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer genreId;
-
+    Integer genreId;
+// mã thể loại tự động sinh
     @Column(nullable = false, unique = true)
-    private String genreName;
-
-    private String description;
-
+    String genreName;
+// tên thể loại được đặc biệt và không được để trống
+    String description;
+// chuỗi mô tả
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
+    // thời gian được tạo được tạo
 }

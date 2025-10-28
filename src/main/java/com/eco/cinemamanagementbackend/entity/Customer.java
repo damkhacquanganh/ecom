@@ -1,58 +1,66 @@
 package com.eco.cinemamanagementbackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "customers")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer customerId;
-
+    Integer customerId;
+//xác định id và tự động sinh mã
     @Column(nullable = false)
-    private String fullName;
-
+    String fullName;
+// Fullname không được để trống
     @Column(unique = true)
-    private String email;
-
+    String email;
+// Email và là cột duy nhất
     @Column(unique = true, nullable = false)
-    private String phone;
-
+    String phone;
+// phone không được để trống và duy nhất
     @Column(nullable = false)
-    private String passwordHash;
-
-    private LocalDate dateOfBirth;
-
+    String passwordHash;
+//mật khẩu mã hóa và không được để trống
+    LocalDate dateOfBirth;
+// sinh nhật
     @Enumerated(EnumType.STRING)
-    private Gender gender;
-
-    private String avatarUrl;
-    private Integer loyaltyPoints = 0;
-
+    Gender gender;
+// giới tính được định nghĩa trong enum
+    String avatarUrl;
+    //link avatar qua url thông qua bên thứ 3 cloundinary
+    Integer loyaltyPoints = 0;
+// điểm trung thành tích lũy có thể đặt trên fe là điểm tích lũy cho thân thiện
     @Enumerated(EnumType.STRING)
-    private MembershipTier membershipTier = MembershipTier.BRONZE;
-
-    private Boolean isVerified = false;
-    private LocalDateTime lastLogin;
-
+    MembershipTier membershipTier = MembershipTier.BRONZE;
+// định nghĩa xếp hạng khách hàng thân thuộc mặc định ban đầu là bronze
+    Boolean isVerified = false;
+    //xác nhận là không mặc định
+    LocalDateTime lastLogin;
+// lần cuối đăng nhập
     @CreationTimestamp
-    private LocalDateTime createdAt;
-
+    LocalDateTime createdAt;
+//tạo thời gian tự động khi tạo lần đầu
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
-
+    LocalDateTime updatedAt;
+// cập nhật thời gian khi cập nhật
     public enum Gender {
         MALE, FEMALE, OTHER
     }
-
+// định nhgiax enum giới tính
     public enum MembershipTier {
         BRONZE, SILVER, GOLD, PLATINUM
     }
-}
+}// định nghĩa enum cấp

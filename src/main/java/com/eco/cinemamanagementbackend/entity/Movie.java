@@ -1,7 +1,8 @@
 package com.eco.cinemamanagementbackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,69 +12,81 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "movies")
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer movieId;
-
+    Integer movieId;
+// thêm mã phim được tự động sinh
     @Column(nullable = false)
-    private String title;
-
-    private String originalTitle;
-    private String description;
-
+    String title;
+// tiêu đề không được để trống
+    String originalTitle;
+    //Tiêu đề gốc
+    String description;
+//Mô tả
     @Column(nullable = false)
-    private Integer duration;
-
-    private LocalDate releaseDate;
-    private LocalDate endDate;
-    private String director;
-    private String cast;
-    private String country;
-    private String language;
-
+    Integer duration;
+// khoảng thời gian phim dự kiến
+    LocalDate releaseDate;
+    //thời gian phát hành
+    LocalDate endDate;
+    // thời gian kết thúc
+    String director;
+    //tác giả
+    String cast;
+    // diễn viên
+    String country;
+    //nước
+    String language;
+// ngôn ngữ
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private AgeRating ageRating;
-
-    private String posterUrl;
-    private String trailerUrl;
-
+    AgeRating ageRating;
+// độ tuổi được định nghĩa
+    String posterUrl;
+    //link poster qua cloundinary
+    String trailerUrl;
+//link trailer qua cloundinary
     @Column(precision = 3, scale = 1)
-    private BigDecimal imdbRating;
-
+    BigDecimal imdbRating;
+// đánh giá imdb
     @Enumerated(EnumType.STRING)
-    private MovieFormat movieFormat = MovieFormat._2D;
-
+    MovieFormat movieFormat = MovieFormat._2D;
+// định dạng movie đuược định nghĩa trong enum và được mặc định là 2D;
     @Enumerated(EnumType.STRING)
-    private Status status = Status.COMING_SOON;
-
+    Status status = Status.COMING_SOON;
+// trạng thái được định nghĩa trong định nghĩa và được mặc định là sắp đến
     @CreationTimestamp
-    private LocalDateTime createdAt;
-
+    LocalDateTime createdAt;
+// thời gian được tạo tự động của phần tạo lần đầu
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
-
+    LocalDateTime updatedAt;
+// thời gian cập nhật được tự động cập nhật
     @ManyToMany
     @JoinTable(
             name = "movie_genres",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
-    private Set<Genre> genres = new HashSet<>();
-
+    Set<Genre> genres = new HashSet<>();
+// thể loại được set theo tạo thêm nhằm tối ưu truy vấn tìm kiếm thể loại
     public enum AgeRating {
         P, K, T13, T16, T18, C
     }
-
+// định nghĩa độ tuổi được xem
     public enum MovieFormat {
         _2D, _3D, IMAX, _4DX
     }
-
+// định nghĩa dạng phim
     public enum Status {
         COMING_SOON, NOW_SHOWING, ENDED
     }
-}
+}// định nghĩa trạng tháo của status

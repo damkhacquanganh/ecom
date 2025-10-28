@@ -1,40 +1,48 @@
 package com.eco.cinemamanagementbackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
-@Data
+@Setter
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "seats")
 public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer seatId;
-
+    Integer seatId;
+// mã ghế
     @ManyToOne
     @JoinColumn(name = "screen_id", nullable = false)
-    private Screen screen;
-
+    Screen screen;
+//nhiều ghết với 1phongf không được để trống
     @Column(nullable = false, length = 5)
-    private String seatRow;
-
+    String seatRow;
+// hàng ghế không được để trống
     @Column(nullable = false)
-    private Integer seatNumber;
-
+    Integer seatNumber;
+// số thứ tự trong hàng
     @Enumerated(EnumType.STRING)
-    private SeatType seatType = SeatType.STANDARD;
-
-    private Integer positionX;
-    private Integer positionY;
-    private Boolean isAvailable = true;
-
+    SeatType seatType = SeatType.STANDARD;
+// loại nghế được định nghĩa
+    Integer positionX;
+    //trục x
+    Integer positionY;
+    //trục Y
+    Boolean isAvailable = true;
+// khả dụng mặc định là đúng
     @CreationTimestamp
-    private LocalDateTime createdAt;
-
+    LocalDateTime createdAt;
+// thời gian được tạo tự động khi khởi tọa
     public enum SeatType {
         STANDARD, VIP, COUPLE, WHEELCHAIR
-    }
+    }//định nghĩa loại ghế
 }

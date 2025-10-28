@@ -1,37 +1,43 @@
 package com.eco.cinemamanagementbackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "booking_concessions")
 public class BookingConcession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer bookingConcessionId;
+    Integer bookingConcessionId;
 
     @ManyToOne
     @JoinColumn(name = "booking_id", nullable = false)
-    private Booking booking;
+    Booking booking;
 
     @ManyToOne
     @JoinColumn(name = "concession_id", nullable = false)
-    private Concession concession;
+    Concession concession;
 
     @Column(nullable = false)
-    private Integer quantity = 1;
+    Integer quantity = 1;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal unitPrice;
+    BigDecimal unitPrice;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal totalPrice;
+    BigDecimal totalPrice;
 
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 }

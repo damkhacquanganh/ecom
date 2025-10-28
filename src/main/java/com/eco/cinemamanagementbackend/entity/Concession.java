@@ -1,43 +1,50 @@
 package com.eco.cinemamanagementbackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "concessions")
 public class Concession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer concessionId;
-
+    Integer concessionId;
+// id món
     @Column(nullable = false)
-    private String itemName;
-
+    String itemName;
+// tên món ăn
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Category category;
-
-    private String description;
-
+    Category category;
+// cột không được để trống thể laoij và được định nghĩa enum trong category
+    String description;
+//Mô tả
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal price;
-
-    private String imageUrl;
-    private Boolean isAvailable = true;
-
+    BigDecimal price;
+// giá và không để trống
+    String imageUrl;
+// chuỗi url trả về từ cloundinary trả về ảnh món ăn
+    Boolean isAvailable = true;
+// mặc định khả năng là được
     @CreationTimestamp
-    private LocalDateTime createdAt;
-
+    LocalDateTime createdAt;
+// tự động tạo thời gian khi creatat lần đầu
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
-
+    LocalDateTime updatedAt;
+// tự động cập nhật thời gian khi update
     public enum Category {
         POPCORN, DRINK, SNACK, COMBO, OTHER
-    }
+    }// định nghĩa enum Category
 }

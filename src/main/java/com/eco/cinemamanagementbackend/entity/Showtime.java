@@ -1,7 +1,8 @@
 package com.eco.cinemamanagementbackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -10,48 +11,53 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "showtimes")
 public class Showtime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer showtimeId;
+    Integer showtimeId;
 
     @ManyToOne
     @JoinColumn(name = "movie_id", nullable = false)
-    private Movie movie;
+    Movie movie;
 
     @ManyToOne
     @JoinColumn(name = "screen_id", nullable = false)
-    private Screen screen;
+    Screen screen;
 
     @ManyToOne
     @JoinColumn(name = "cinema_id", nullable = false)
-    private Cinema cinema;
+    Cinema cinema;
 
     @Column(nullable = false)
-    private LocalDate showDate;
+    LocalDate showDate;
 
     @Column(nullable = false)
-    private LocalTime startTime;
+    LocalTime startTime;
 
     @Column(nullable = false)
-    private LocalTime endTime;
+    LocalTime endTime;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal basePrice;
+    BigDecimal basePrice;
 
     @Enumerated(EnumType.STRING)
-    private Status status = Status.SCHEDULED;
+    Status status = Status.SCHEDULED;
 
-    private Integer availableSeats;
+    Integer availableSeats;
 
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    LocalDateTime updatedAt;
 
     public enum Status {
         SCHEDULED, ONGOING, COMPLETED, CANCELLED

@@ -1,32 +1,41 @@
 package com.eco.cinemamanagementbackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "cinema_chains")
 public class CinemaChain {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer chainId;
-
+    Integer chainId;
+//id hệ thống
     @Column(nullable = false)
-    private String chainName;
-
-    private String headquartersAddress;
-    private String hotline;
-    private String email;
-    private String website;
-    private String logoUrl;
-
+    String chainName;
+// tên hệ thống
+    String headquartersAddress;
+// địa chỉ
+    String hotline;
+// liên hệ
+    String email;
+// email
+    String website;
+//link website
+    String logoUrl;
+    // link logo liên kết qua cloundinary
     @CreationTimestamp
-    private LocalDateTime createdAt;
-
+    LocalDateTime createdAt;
+// tự động tạo thời gian khi tạo mới lần đâu
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
-}
+    LocalDateTime updatedAt;
+}// tự động cập nhật thời gian qua lần đầu

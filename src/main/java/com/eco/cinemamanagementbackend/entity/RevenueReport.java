@@ -1,46 +1,53 @@
 package com.eco.cinemamanagementbackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "revenue_reports")
 public class RevenueReport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer reportId;
-
+    Integer reportId;
+//id doanh thu báo cáo và được sinh tự động
     @ManyToOne
     @JoinColumn(name = "cinema_id")
-    private Cinema cinema;
-
+    Cinema cinema;
+// nối nhiều một nhằm xác định rạp nào
     @Column(nullable = false)
-    private LocalDate reportDate;
-
-    private Integer totalBookings = 0;
-    private Integer totalTicketsSold = 0;
-
+    LocalDate reportDate;
+//thời gian tạo báo cáo và không được để trống
+    Integer totalBookings = 0;
+    //khai báo tổng dược đặt vé là 0
+    Integer totalTicketsSold = 0;
+// khai báo tổng được tiket được bán ra là 0
     @Column(precision = 10, scale = 2)
-    private BigDecimal ticketRevenue = BigDecimal.ZERO;
-
+    BigDecimal ticketRevenue = BigDecimal.ZERO;
+// doanh thu vé được khai báo mặc định là 0
     @Column(precision = 10, scale = 2)
-    private BigDecimal concessionRevenue = BigDecimal.ZERO;
-
+    BigDecimal concessionRevenue = BigDecimal.ZERO;
+// doanh thu nhượng bộ mặc định là 0
     @Column(precision = 10, scale = 2)
-    private BigDecimal totalRevenue = BigDecimal.ZERO;
-
+    BigDecimal totalRevenue = BigDecimal.ZERO;
+// tổng doanh thu được khai báo mặc định là 0
     @Column(precision = 10, scale = 2)
-    private BigDecimal totalDiscount = BigDecimal.ZERO;
-
+    BigDecimal totalDiscount = BigDecimal.ZERO;
+// toongt giảm giá được khai báo mặc định là 0
     @Column(precision = 10, scale = 2)
-    private BigDecimal netRevenue = BigDecimal.ZERO;
-
+    BigDecimal netRevenue = BigDecimal.ZERO;
+// doanh thu ròng được mặc định là 0
     @CreationTimestamp
-    private LocalDateTime createdAt;
-}
+    LocalDateTime createdAt;
+}// thời gian tạo báo cáo được tạo tự động
