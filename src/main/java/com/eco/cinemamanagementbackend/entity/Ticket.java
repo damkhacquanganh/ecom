@@ -1,40 +1,49 @@
 package com.eco.cinemamanagementbackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Table(name = "tickets")
+@Table(name = "tickets")//một booking có thể có nhiều vé
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer ticketId;
-
+    Integer ticketId;
+// id vé đặt
     @ManyToOne
     @JoinColumn(name = "booking_id", nullable = false)
-    private Booking booking;
-
+    Booking booking;
+// nhiều vé cho 1 lần booking và không được để trống
     @ManyToOne
     @JoinColumn(name = "seat_id", nullable = false)
-    private Seat seat;
-
+    Seat seat;
+//id ghế
     @Enumerated(EnumType.STRING)
-    private TicketType ticketType = TicketType.ADULT;
-
+    TicketType ticketType = TicketType.ADULT;
+// loại vé được định nghĩa mặc định là người lớn
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal price;
-
-    private String qrCode;
-    private Boolean isUsed = false;
-    private LocalDateTime usedAt;
+    BigDecimal price;
+//giá không được để trống
+    String qrCode;
+    //chuỗi qr code
+    Boolean isUsed = false;
+    // giá trị sử dụng mặc định là không
+    LocalDateTime usedAt;
+    // thời gian sử dụng được định nghĩa
 
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 
     public enum TicketType {
         ADULT, CHILD, STUDENT, SENIOR

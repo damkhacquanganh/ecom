@@ -1,49 +1,54 @@
 package com.eco.cinemamanagementbackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "work_schedules")
 public class WorkSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer scheduleId;
-
+    Integer scheduleId;
+// mã lịch trình làm việc
     @ManyToOne
     @JoinColumn(name = "employee_id", nullable = false)
-    private Employee employee;
-
+    Employee employee;
+//nhiều lịch trình cho 1 nhân viên
     @ManyToOne
     @JoinColumn(name = "cinema_id", nullable = false)
-    private Cinema cinema;
-
+    Cinema cinema;
+//nhiều lịch trình cho rạp chiếu và không để trống
     @Column(nullable = false)
-    private LocalDate workDate;
-
+    LocalDate workDate;
+//thời gian làm việc
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Shift shift;
-
+    Shift shift;
+//ca làm được định nghĩa
     @Column(nullable = false)
-    private LocalTime startTime;
-
+    LocalTime startTime;
+//thời gian bắt dầu không được để trống
     @Column(nullable = false)
-    private LocalTime endTime;
-
+    LocalTime endTime;
+// thời gian kết thúc
     @Enumerated(EnumType.STRING)
-    private Status status = Status.SCHEDULED;
-
-    private String notes;
+    Status status = Status.SCHEDULED;
+//trạng thái được định nghĩa mặc định là đã lên lịch
+    String notes;
 
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 
     public enum Shift {
         MORNING, AFTERNOON, EVENING, FULL_DAY
@@ -51,5 +56,5 @@ public class WorkSchedule {
 
     public enum Status {
         SCHEDULED, COMPLETED, ABSENT, CANCELLED
-    }
+    }// đã lên, hoàn thành, vắng mặt v hủy
 }
