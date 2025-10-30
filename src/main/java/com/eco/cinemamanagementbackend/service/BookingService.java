@@ -21,4 +21,6 @@ public interface BookingService {
     void deleteBooking(Integer id);
 
     void cancelBooking(Integer id);
+
+    BookingResponse getBookingsById(Integer id);
 }

@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
-    List<Booking> findByCustomerCustomerId(Integer customerId);
+    List<Booking> findByCustomerId(Integer customerId);
 // lấy list booking thông qua customerid
     @Query("SELECT b from Booking b where b.bookingDate >= :startDate and b.bookingDate <= :endDate")
     List<Booking> findByBookingDateBetween(@Param("startDate") LocalDateTime startDate,@Param("endDate") LocalDateTime endDate);

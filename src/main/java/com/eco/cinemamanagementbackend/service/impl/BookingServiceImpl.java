@@ -50,4 +50,9 @@ public class BookingServiceImpl implements BookingService {
     public void cancelBooking(Integer id) {
 
     }
+
+    @Override
+    public BookingResponse getBookingsById(Integer id) {
+        return null;
+    }
 }

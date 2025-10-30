@@ -7,3 +7,7 @@ spring:
     hibernate:
       ddl-auto: update  # Hoặc validate cho prod
     show-sql: true
+jwt:
+  secret: mysuperlongsecretkey123456789012345678901234567890
+  access-token-expiration-ms: 3600000
+  refresh-token-expiration-ms: 604800000
