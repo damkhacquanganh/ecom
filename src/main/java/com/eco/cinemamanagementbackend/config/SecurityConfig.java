@@ -2,6 +2,7 @@ package com.eco.cinemamanagementbackend.config;
 
 import com.eco.cinemamanagementbackend.config.JwtAuthenticationFilter;
 import com.eco.cinemamanagementbackend.config.JwtTokenProvider;
+import com.eco.cinemamanagementbackend.service.RedisService;
 import com.eco.cinemamanagementbackend.service.impl.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +24,7 @@ public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final UserDetailsServiceImpl userDetailsService;
-
+    private final RedisService redisService;
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -45,7 +46,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/admin/**").hasAnyRole("ADMIN", "MANAGER")
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, userDetailsService), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, userDetailsService,redisService), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

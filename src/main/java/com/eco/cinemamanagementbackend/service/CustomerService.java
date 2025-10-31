@@ -12,9 +12,13 @@ import java.util.List;
 //@Service
 public interface CustomerService {
     CustomerResponse createCustomer(CreateCustomerRequest request);
+
     CustomerResponse getCustomerById(Integer id);
-    CustomerResponse updateCustomer(UpdateCustomerRequest request);
-    void deleteCustomer(Integer id);
+
     List<CustomerResponse> getAllCustomers();
+
+    CustomerResponse updateCustomer(Integer id, UpdateCustomerRequest request);
+
+    void deleteCustomer(Integer id);
 
 }

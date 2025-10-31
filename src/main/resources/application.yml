@@ -7,6 +7,14 @@ spring:
     hibernate:
       ddl-auto: update  # Hoặc validate cho prod
     show-sql: true
+  data:
+    redis:
+      host: localhost  # Thay bằng host thực (e.g., redis://your-redis-url:6379)
+      port: 6379
+      # password: your-password  # Nếu có
+      # ssl.enabled: true  # Cho production
+    cache:
+      type: redis  # Nếu dùng cache, optional
 jwt:
   secret: mysuperlongsecretkey123456789012345678901234567890
   access-token-expiration-ms: 3600000

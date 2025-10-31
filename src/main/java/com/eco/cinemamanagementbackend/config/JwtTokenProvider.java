@@ -110,4 +110,12 @@ public class JwtTokenProvider {
                 .getBody();
         return claims.getId();
     }
+    public long getExpirationFromToken(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.getExpiration().getTime() - System.currentTimeMillis();
+    }
 }
